@@ -1,30 +1,38 @@
+## 🌟 中文优化版特性 (Enhanced Edition)
+
+本版本基于 BPB Worker Panel 进行深度中文本土化与网络体验优化：
+
+1. **🇨🇳 全界面中文本土化**：管理面板、配置说明、提示信息全中文适配，操作直观友好。
+2. **🌐 客户端订阅增加国家标识与国旗**：
+   - 自动根据 Cloudflare 边缘数据中心（`colo`，如 `FRA` 德国、`HKG` 香港、`SJC` 美国、`NRT` 日本、`SIN` 新加坡等）自动匹配国旗与国家名称；
+   - 节点格式规范为：`🇩🇪 德国 01 | VLESS - 域名 : 443`；
+   - 支持在面板【设置】手动指定国家前缀，或保持【自动识别】。
+3. **✨ 优选 IP 支持备注标签与国内三网一键载入**：
+   - 解决 Clash Verge 等客户端中节点大面积报 `Error` 超时的问题；
+   - 支持语法：`IP或域名#国家运营商备注`（例如 `104.16.1.1#🇭🇰 香港电信`），客户端将直接显示对应专属标签；
+   - 面板提供 **【✨ 一键载入国内优质优选 IP / 域名】** 按钮，一键填充电信/联通/移动三网测速优选节点。
+4. **🛡️ 去除原版硬编码伊朗国旗**：Warp 节点彻底移除伊朗国旗 `🇮🇷`，规范展示为 `🌐 WARP 01 - 官方节点` 与 `🌐 WoW 01 - 链式代理`。
+
+---
+
+## 部署准备
+
 先去注册以下账户：
+- 一个 GitHub 账号：https://github.com
+- 一个 Cloudflare 账号：https://dash.cloudflare.com
 
-一个 GitHub 账号https://github.com
+## 使用方法：Cloudflare Pages 搭建
+1. Fork 本存储库到自己的 GitHub。
+2. 登录 Cloudflare 控制台 → 点击 **Workers & Pages** → **创建应用程序** → 选择 **Pages** → **连接到 Git**；
+3. 选择刚刚 Fork 的本存储库，构建设置保持默认（无需填写构建命令与输出目录），点击保存并部署；
+4. 部署成功后，在 Pages 项目的 **设置 (Settings)** → **环境变量 (Environment variables)** 中添加如下必要变量：
 
-一个 Cloudflare账号https://dash.cloudflare.com
+| 变量名 | 说明 |
+| :---: | :--- |
+| **UUID** | 必要；[在线生成 UUID](https://1024tools.com/uuid) ，用于生成 VLESS 节点身份凭据 |
+| **TR_PASS** | 必要；自定义密码，用于生成 Trojan 节点密码 |
+| **kv** | 必要；绑定一个 KV 命名空间（绑定变量名填写小写的 `kv`） |
 
-## 使用方法：Pages+Fork公开仓库
-1. 登录自己的GitHub直接Fork本存储库https://github.com/33995331/-BPB-Worker-Panel
+5. 绑定完环境变量与 KV 后，在 **部署 (Deployments)** 页面点击最新的部署记录右侧 **...** → **重试部署 (Retry deployment)**。
+6. 访问面板：部署完成后，在你的 Pages 域名或绑定域名后加上 `/panel` 进行访问（例如 `https://你的域名/panel`）。首次访问时设置的管理密码将安全保存在绑定的 KV 中。
 
-本存储库main主线默认为自动升级为最新版本，Fork后在（Actions行动）中打开工作流程就可以开启自动更新。
-
-2. 到Cloudflare利用Pages+github搭建。
-
-打开 Cloudflare → Workers & Pages → 点击创建 Pages；
-
-
-选择 GitHub 仓库并连接 BPB 项目；
-
-设置为生产环境构建并部署。
-
-3. 再增加下面必要的变量。
- 添加完变量后要重试部署
-## 环境变量与说明（复制变量前将网页翻译切换到原文）
-| 变量  | 用法 |
-| :-------------: | :-------------: |
-| **UUID**  | 必要；[在线生成](https://1024tools.com/uuid) ，用于生成 VLESS 节点配置 |
-| **TR_PASS**  | 必要；密码，自行随意输入，用于生成 Trojan 节点配置  |
-| **kv**  | 必要；KV命名空间  |
-
-试问面板：/panel，部署成功后，在 url 后面增加/panel来进行访问面板，访问面板修改的密码将会保存在kv里。

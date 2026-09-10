@@ -1,10 +1,5 @@
 name: w
 on:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: "0 16 * * *"
   workflow_dispatch:
 permissions:
   contents: write
